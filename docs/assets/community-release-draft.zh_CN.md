@@ -14,11 +14,11 @@
 
 ## 中文简介
 
-适用于 FoloToy AI Passport 的原创复古绿色终端喝水提醒应用。原创绿色终端界面和复古卡通人物，身份页默认显示 `USER-01`。每天 09:00–21:00，打开总开关后以固定 30 分钟间隔提醒喝水；到点亮屏并播放提示音。提醒待确认时，30 秒无操作会息屏，按键可唤醒；按 OK 确认喝水后重新计时。通过独立的蓝牙 BLUFI 配网小程序配置 2.4 GHz Wi-Fi 并校时，成功校时后关闭 Wi-Fi。吃药页目前仅为入口，没有吃药提醒。时区固定为亚洲/上海；时间未在本次启动后同步时不会提醒。无源 NFC 标签是否能用于门禁和考勤，需分别实测。插画为原创素材，未使用第三方游戏人物、标志或截图。
+适用于 FoloToy AI Passport 的原创复古绿色终端喝水提醒应用。原创绿色终端界面和复古卡通人物，身份页默认显示 `USER-01`。每天 09:00–21:00，打开总开关后以固定 30 分钟间隔提醒喝水；到点亮屏并发出四声提示音，每声约 0.5 秒、声间约 0.2 秒。提醒待确认时，30 秒无操作会息屏，按键可唤醒；按 OK 确认喝水后重新计时。通过独立的蓝牙 BLUFI 配网小程序配置 2.4 GHz Wi-Fi 并校时，成功校时后关闭 Wi-Fi。吃药页目前仅为入口，没有吃药提醒。时区固定为亚洲/上海；时间未在本次启动后同步时不会提醒。无源 NFC 标签是否能用于门禁和考勤，需分别实测。插画为原创素材，未使用第三方游戏人物、标志或截图。
 
 ## English description
 
-A retro green terminal hydration reminder for the FoloToy AI Passport. It uses original green terminal graphics and an original retro cartoon character, with `USER-01` as the default identity label. When the master switch is on, water alerts run daily from 09:00 to 21:00 at a fixed 30-minute interval. An alert lights the screen and plays a tone; after 30 seconds without input the backlight goes off while the alert remains pending. Wake with a button and press OK to acknowledge, which starts the next 30-minute interval. A separate Bluetooth BLUFI provisioning mini-program supplies 2.4 GHz Wi-Fi credentials for time sync; Wi-Fi turns off after sync. The medicine page is a placeholder with no medicine alerts. Timezone is fixed to Asia/Shanghai, and reminders require a fresh sync after boot. Access and attendance compatibility of the passive NFC tag requires separate testing. All illustrations are original and do not use third-party game characters, logos, or screenshots.
+A retro green terminal hydration reminder for the FoloToy AI Passport. It uses original green terminal graphics and an original retro cartoon character, with `USER-01` as the default identity label. When the master switch is on, water alerts run daily from 09:00 to 21:00 at a fixed 30-minute interval. An alert lights the screen and plays four 0.5-second beeps separated by 0.2 seconds; after 30 seconds without input the backlight goes off while the alert remains pending. Wake with a button and press OK to acknowledge, which starts the next 30-minute interval. A separate Bluetooth BLUFI provisioning mini-program supplies 2.4 GHz Wi-Fi credentials for time sync; Wi-Fi turns off after sync. The medicine page is a placeholder with no medicine alerts. Timezone is fixed to Asia/Shanghai, and reminders require a fresh sync after boot. Access and attendance compatibility of the passive NFC tag requires separate testing. All illustrations are original and do not use third-party game characters, logos, or screenshots.
 
 ## 正式发布前检查
 

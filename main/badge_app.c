@@ -254,18 +254,46 @@ static void refresh_screen(void)
 
 static void alert_tone(void)
 {
+    esp_err_t err;
     if (!s_audio_ready) {
-        s_audio_ready = bsp_audio_init() == ESP_OK;
-        if (!s_audio_ready) return;
+        err = bsp_audio_init();
+        if (err != ESP_OK) {
+            ESP_LOGE(TAG, "Alert audio init failed: %s", esp_err_to_name(err));
+            return;
+        }
+        s_audio_ready = true;
     }
-    if (bsp_audio_wake() != ESP_OK) return;
-    if (bsp_audio_set_format(16000, 16, 1) != ESP_OK) return;
-    bsp_audio_set_volume(35);
+    err = bsp_audio_wake();
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Alert audio wake failed: %s", esp_err_to_name(err));
+        return;
+    }
+    bsp_audio_set_volume(80);
+    err = bsp_audio_set_format(16000, 16, 1);
+    if (err != ESP_OK) {
+        ESP_LOGE(TAG, "Alert audio format failed: %s", esp_err_to_name(err));
+        return;
+    }
     int16_t pcm[320];
-    for (size_t i = 0; i < 320; i++) pcm[i] = (i % 18 < 9) ? 4500 : -4500;
-    for (int frame = 0; frame < 8; frame++)
-        if (bsp_audio_write(pcm, sizeof(pcm)) != ESP_OK) break;
-    (void)bsp_audio_sleep();
+    // Four 500 ms beeps with 200 ms gaps; each PCM frame is 20 ms at 16 kHz.
+    for (int beep = 0; beep < 4 && err == ESP_OK; beep++) {
+        for (size_t i = 0; i < 320; i++) pcm[i] = (i % 16 < 8) ? 7000 : -7000;
+        for (int frame = 0; frame < 25 && err == ESP_OK; frame++) {
+            err = bsp_audio_write(pcm, sizeof(pcm));
+        }
+        if (beep < 3 && err == ESP_OK) {
+            memset(pcm, 0, sizeof(pcm));
+            for (int frame = 0; frame < 10 && err == ESP_OK; frame++) {
+                err = bsp_audio_write(pcm, sizeof(pcm));
+            }
+        }
+    }
+    if (err != ESP_OK)
+        ESP_LOGE(TAG, "Alert audio write failed: %s", esp_err_to_name(err));
+    if (err == ESP_OK) vTaskDelay(pdMS_TO_TICKS(120)); // Drain queued I2S samples.
+    err = bsp_audio_sleep();
+    if (err != ESP_OK)
+        ESP_LOGE(TAG, "Alert audio sleep failed: %s", esp_err_to_name(err));
 }
 
 static void handle_key(key_message_t key)
