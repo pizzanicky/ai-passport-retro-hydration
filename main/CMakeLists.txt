@@ -1,5 +1,12 @@
 idf_component_register(
-    SRCS "main.c"
+    SRCS "badge_app.c"
+         "../assets/fonts/badge_font_16.c"
+         "../assets/fonts/badge_font_28.c"
+         "../assets/images/badge_default_avatar.c"
+         "../assets/images/badge_page_icons.c"
+         "badge_reminder.c"
+         "badge_network.c"
+         "badge_blufi_security.c"
          "demo_navigation.c"
          "ui_pixel.c"
          "ui_pixel_math.c"
@@ -12,5 +19,5 @@ idf_component_register(
          "demo_ble.c"
          "demo_low_power.c"
     INCLUDE_DIRS "."
-    REQUIRES bsp bt esp_event esp_hw_support esp_netif esp_timer esp_wifi nvs_flash
+    REQUIRES bsp bt esp_event esp_hw_support esp_netif esp_timer esp_wifi lwip mbedtls nvs_flash
 )
