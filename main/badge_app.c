@@ -33,14 +33,14 @@ extern const lv_font_t badge_font_16;
 extern const lv_font_t badge_font_28;
 extern const lv_image_dsc_t badge_default_avatar;
 extern const lv_image_dsc_t badge_icon_water;
-extern const lv_image_dsc_t badge_icon_medicine;
 extern const lv_image_dsc_t badge_icon_system;
 
-typedef enum { PAGE_HOME, PAGE_ID, PAGE_WATER, PAGE_MED, PAGE_SYSTEM } page_t;
+typedef enum { PAGE_HOME, PAGE_ID, PAGE_WATER, PAGE_SYSTEM } page_t;
 typedef struct { bsp_btn_t button; bsp_btn_ev_t event; } key_message_t;
 
 static const char *TAG = "hydration_badge";
-static const char *const MENU[] = { "IDENTITY", "WATER", "MEDICINE", "SYSTEM" };
+#define MENU_COUNT 3
+static const char *const MENU[MENU_COUNT] = { "IDENTITY", "WATER", "SYSTEM" };
 static QueueHandle_t s_keys;
 static badge_reminder_t s_reminder;
 static page_t s_page = PAGE_HOME;
@@ -182,12 +182,11 @@ static void refresh_screen(void)
         lv_label_set_text(s_title, "STATUS / 00");
         lv_label_set_text(s_kicker, "PERSONAL TERMINAL");
         lv_label_set_text_fmt(s_body,
-            "%s\n\n%s %s\n%s %s\n%s %s\n%s %s\n\n> %s",
+            "%s\n\n%s %s\n%s %s\n%s %s\n\n> %s",
             BADGE_NICKNAME,
             s_menu_index == 0 ? ">" : " ", MENU[0],
             s_menu_index == 1 ? ">" : " ", MENU[1],
             s_menu_index == 2 ? ">" : " ", MENU[2],
-            s_menu_index == 3 ? ">" : " ", MENU[3],
             s_reminder.pending ? "WATER ALERT" :
                 (s_reminder.reminders_enabled ? "READY" : "REMINDERS OFF"));
         add_line(s_screen, 27, 100, 185, 1, DIM);
@@ -203,10 +202,6 @@ static void refresh_screen(void)
         lv_obj_set_y(s_body, 212);
         lv_obj_set_style_text_font(s_body, &badge_font_28, 0);
         lv_label_set_text(s_body, "USER-01");
-        lv_obj_t *tag = lv_label_create(s_screen);
-        label_style(tag, DIM, &badge_font_16);
-        lv_obj_set_pos(tag, 27, 244);
-        lv_label_set_text(tag, "PASSIVE NFC / TAG");
         lv_label_set_text(s_footer, "HOLD OK  BACK");
         break;
     case PAGE_WATER: {
@@ -222,15 +217,8 @@ static void refresh_screen(void)
             "UP OFF  OK DONE  HOLD BACK" : "OK ALERTS  HOLD BACK");
         break;
     }
-    case PAGE_MED:
-        lv_label_set_text(s_title, "MEDICINE / 03");
-        lv_label_set_text(s_kicker, "RESERVED MODULE");
-        draw_icon_page(&badge_icon_medicine, "MEDICINE");
-        lv_label_set_text(s_body, "FUTURE MODULE\nNO ALERTS CONFIGURED");
-        lv_label_set_text(s_footer, "HOLD OK  BACK");
-        break;
     case PAGE_SYSTEM: {
-        lv_label_set_text(s_title, "SYSTEM / 04");
+        lv_label_set_text(s_title, "SYSTEM / 03");
         lv_label_set_text(s_kicker, "NETWORK & CLOCK");
         draw_icon_page(&badge_icon_system, "SYSTEM");
         struct tm local = {0};
@@ -310,8 +298,8 @@ static void handle_key(key_message_t key)
         s_page = PAGE_HOME;
     } else if (key.event == BSP_BTN_CLICK) {
         if (s_page == PAGE_HOME) {
-            if (key.button == BSP_BTN_UP) s_menu_index = (s_menu_index + 3) % 4;
-            if (key.button == BSP_BTN_DOWN) s_menu_index = (s_menu_index + 1) % 4;
+            if (key.button == BSP_BTN_UP) s_menu_index = (s_menu_index + MENU_COUNT - 1) % MENU_COUNT;
+            if (key.button == BSP_BTN_DOWN) s_menu_index = (s_menu_index + 1) % MENU_COUNT;
             if (key.button == BSP_BTN_OK) s_page = (page_t)(s_menu_index + 1);
         } else if (s_page == PAGE_WATER) {
             if (key.button == BSP_BTN_OK) {

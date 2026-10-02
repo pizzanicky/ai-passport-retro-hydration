@@ -32,9 +32,9 @@
 | [`images/badge_default_avatar.c`](images/badge_default_avatar.c) | 112 × 132，LVGL ARGB8888 C 数据 | 同一图像的固件像素数据；BGRA 字节顺序。 |
 | [`images/badge-identity-preview.png`](images/badge-identity-preview.png) | 240 × 320，PNG RGB | 公开版身份页电脑预览；不代表设备实拍效果。 |
 | [`images/community-cover.png`](images/community-cover.png) | 1280 × 720，PNG RGB | 社区发布原创封面；不包含游戏角色、标志或截图。 |
-| [`images/badge-icon-water.png`](images/badge-icon-water.png)、[`images/badge-icon-medicine.png`](images/badge-icon-medicine.png)、[`images/badge-icon-system.png`](images/badge-icon-system.png) | 每张 80 × 80，PNG RGBA | 工卡子页面的原创荧光绿水滴、胶囊与齿轮图标。由 `python3 tools/generate_badge_page_icons.py` 生成，未使用游戏素材。 |
-| [`images/badge_page_icons.c`](images/badge_page_icons.c) | 三张 80 × 80 的 LVGL ARGB8888 图像描述符，像素合计 76,800 字节 | 从上述三张图标生成的固件 BGRA 数据，由 `main/CMakeLists.txt` 编入应用。 |
-| [`images/badge-secondary-pages-preview.png`](images/badge-secondary-pages-preview.png) | 720 × 320，PNG RGB | 喝水、吃药和 System 页的电脑排版预览，不代表设备实拍效果。 |
+| [`images/badge-icon-water.png`](images/badge-icon-water.png)、[`images/badge-icon-system.png`](images/badge-icon-system.png) | 每张 80 × 80，PNG RGBA | 喝水页和 SYSTEM 页的原创荧光绿水滴与齿轮图标。由 `python3 tools/generate_badge_page_icons.py` 生成，未使用游戏素材。 |
+| [`images/badge_page_icons.c`](images/badge_page_icons.c) | 两张 80 × 80 的 LVGL ARGB8888 图像描述符，像素合计 51,200 字节 | 从上述两张图标生成的固件 BGRA 数据，由 `main/CMakeLists.txt` 编入应用。 |
+| [`images/badge-secondary-pages-preview.png`](images/badge-secondary-pages-preview.png) | 480 × 320，PNG RGB | 喝水页和 SYSTEM 页的电脑排版预览，不代表设备实拍效果。 |
 
 - 使用描述性命名，并记录尺寸、像素格式、转换步骤与目标路径。
 - 优先采用适合 240 × 320 RGB565 显示的格式，并纳入 Flash 与内部 RAM 考量。

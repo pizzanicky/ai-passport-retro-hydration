@@ -54,19 +54,6 @@ def water(draw, image):
     draw.line([pt(31, 41), pt(34, 35)], fill=INK, width=2*SCALE)
 
 
-def medicine(draw, image):
-    pill = Image.new('RGBA', (SIZE*SCALE, SIZE*SCALE))
-    p = ImageDraw.Draw(pill)
-    p.rounded_rectangle(box(17, 31, 63, 49), radius=9*SCALE,
-                        fill=DARK, outline=INK, width=3*SCALE)
-    p.rounded_rectangle(box(19, 33, 39, 47), radius=7*SCALE, fill=DIM)
-    p.line([pt(40, 32), pt(40, 48)], fill=INK, width=2*SCALE)
-    pill = pill.rotate(-35, resample=Image.Resampling.BICUBIC)
-    image.alpha_composite(pill)
-    draw.line([pt(56, 21), pt(61, 21)], fill=INK, width=2*SCALE)
-    draw.line([pt(60, 17), pt(60, 22)], fill=INK, width=2*SCALE)
-
-
 def system(draw, image):
     del image
     points = []
@@ -107,7 +94,7 @@ def c_image(name, image):
 def main():
     OUT.mkdir(exist_ok=True)
     images = {name: create(name, art) for name, art in
-              [('water', water), ('medicine', medicine), ('system', system)]}
+              [('water', water), ('system', system)]}
     source = ['#include "lvgl.h"', '', '/* Original vector-style page icons; BGRA pixels in Flash. */', '']
     source += [c_image(name, image) for name, image in images.items()]
     (OUT / 'badge_page_icons.c').write_text('\n'.join(source))
